@@ -1,0 +1,42 @@
+body {
+	background-color: #001;
+}
+
+#root {
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 2rem;
+	text-align: center;
+}
+
+svg {
+	fill: transparent;
+	position: relative;
+	z-index: 1;
+
+	.path {
+		stroke-width: 2.5px;
+
+		&.active {
+			stroke-width: 7.5px;
+			stroke: white;
+		}
+		&.selected {
+			stroke-width: 7.5px;
+			stroke: gold;
+		}
+	}
+
+	.selected {
+			stroke: gold !important;
+		}
+
+	.location {
+		fill: #f0f3;
+		stroke: magenta;
+
+		&.active {
+			fill: #fffa;
+		}
+	}
+}
