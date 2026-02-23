@@ -1078,7 +1078,7 @@
 		]
 	},
 	{
-		"name": "Luna River Crossroads - Van Richten's Tower",
+		"name": "Luna River Crossroads - Tower of Khazan",
 		"color": "darkblue",
 		"segments": [
 			{
@@ -1177,14 +1177,14 @@
 					"q": 17,
 					"r": 2,
 					"s": -28,
-					"name": "Van Richten's Tower",
+					"name": "Tower of Khazan",
 					"className": "location"
 				}
 			}
 		]
 	},
 	{
-		"name": "Raven River Crossroads - Van Richten's Tower",
+		"name": "Raven River Crossroads - Tower of Khazan",
 		"color": "darkgreen",
 		"segments": [
 			{
@@ -1192,7 +1192,7 @@
 					"q": 17,
 					"r": 2,
 					"s": -28,
-					"name": "Van Richten's Tower",
+					"name": "Tower of Khazan",
 					"className": "location"
 				},
 				"end": {
