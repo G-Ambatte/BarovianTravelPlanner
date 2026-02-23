@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { HexGrid, Layout, Hexagon, Path, Text, Hex, GridGenerator } from 'react-hexgrid'
 import { initHex } from './hexagons'
 import { getPathLength, initPaths } from './paths'
+import { useLocalStorage } from './useLocalStorage'
 
 import BaroviaMap from './assets/barovia-map.webp'
 import './App.css'
@@ -13,8 +14,8 @@ function App() {
   const [ pathName, setPathName ] = useState('');
   const [ pathLength, setPathLength ] = useState(0);
 
-  const [ gridValue, setGridValue ] = useState(0.25);
-  const [ speed, setSpeed ] = useState(3);
+  const [ gridValue, setGridValue ] = useLocalStorage('gridScale', 0.25);
+  const [ speed, setSpeed ] = useLocalStorage('travelSpeed', 3);
 
   const [ hexagons, setHexagons ] = useState([]);
   const [ paths, setPaths ] = useState([]);
