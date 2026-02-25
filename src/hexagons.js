@@ -37,7 +37,7 @@ function initHex() {
 		// Berez
 		{ q: 25, r: 13, s: -38, name: 'Drowned Village of Berez' },
 		// Van Richten's Tower
-		{ q: 17, r: 2, s: -28, name: 'Van Richten\'s Tower' },
+		{ q: 17, r: 2, s: -28, name: 'Tower of Khazan' },
 		// Krezk
 		{ q: 7, r: 8, s: -15, name: 'Village of Krezk' },
 		// Wizard of Wines Winery
