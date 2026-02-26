@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { HexGrid, Layout, Hexagon, Path, Text, Hex, GridGenerator } from 'react-hexgrid'
-import { initHex } from './hexagons'
+import Hexagons from './hexagons.jsx';
+import { initHex } from './hexs'
 import { getPathLength, initPaths } from './paths'
 import { useLocalStorage } from './useLocalStorage'
 
@@ -17,6 +18,7 @@ function App() {
   const [ gridValue, setGridValue ] = useLocalStorage('gridScale', 0.25);
   const [ speed, setSpeed ] = useLocalStorage('travelSpeed', 3);
 
+  const [ showHexagons, setShowHexagons ] = useState(false);
   const [ hexagons, setHexagons ] = useState([]);
   const [ paths, setPaths ] = useState([]);
 
@@ -53,18 +55,16 @@ function App() {
     <div style={{ position: 'relative'}}>
       <HexGrid width={1280} height={822} viewBox="0 0 1280 822" >
         <Layout size={{ x: 10.15, y: 10.15 }} flat={true} spacing={1} origin={{ x: 43, y: 52 }}>
-          { hexagons.map((hex, i)=>{
-            return <Hexagon
-              key={`hex-${i}`}
-              className={`${hex.className || ''} ${hex.name == locationName ? 'active' : ''} ${hex == currentHex ? 'selected' : ''}`}
-              q={hex.q}
-              r={hex.r}
-              s={hex.s}
-              stroke={showOverlay ? 'blue' : 'transparent' }
-              onMouseOver={ ()=>{if(hex.name) setLocationName(hex.name)} }
-              onClick={()=>{addToCustomPath(hex)}}
-            />})
-          }
+          <Hexagons
+            display={showHexagons}
+            hexagons={hexagons}
+            showOverlay={showOverlay}
+            locations={false}
+            locationName={locationName}
+            setLocationName={setLocationName}
+            currentHex={currentHex}
+            addToCustomPath={addToCustomPath}
+          />
           { paths.filter((path)=>{return pathName == path.name;}).map((path, i)=>{
             return path.segments.map((segment, segmentIndex)=>{
               return <g key={`active-${i}-${segmentIndex}`}>
@@ -133,6 +133,15 @@ function App() {
               </g>
             })
           }
+          <Hexagons
+            hexagons={hexagons}
+            showOverlay={showOverlay}
+            locations={true}
+            locationName={locationName}
+            setLocationName={setLocationName}
+            currentHex={currentHex}
+            addToCustomPath={addToCustomPath}
+          />
         </Layout>
       </HexGrid>
       <img src={BaroviaMap} style={{width: '100%', position: 'absolute', left: 0, top: 0, zIndex: 0}}/>
