@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React, { memo } from 'react'
+import { memo } from 'react'
 import { Hexagon } from 'react-hexgrid'
 
 const Hexagons = memo(({ 
@@ -28,6 +27,5 @@ const Hexagons = memo(({
       />})
 })
 
-Hexagons.propTypes = {}
 
 export default Hexagons
