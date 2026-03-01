@@ -5,7 +5,7 @@ import { initHex } from './hexs'
 import { getPathLength, initPaths } from './paths'
 import { useLocalStorage } from './useLocalStorage'
 
-import BaroviaMap from './assets/barovia-map.webp'
+import BaroviaMap from './assets/images/barovia-map.webp'
 import './App.css'
 
 
