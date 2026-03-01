@@ -1,5 +1,7 @@
 body {
-	background-color: #001;
+	--bgColor: #001;
+	--windowBG: #78a;
+	background-color: var(--bgColor);
 	& * {
 		max-width: 1280px;
 	}
