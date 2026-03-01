@@ -6,7 +6,7 @@ import { getPathLength, initPaths } from './paths'
 import { useLocalStorage } from './useLocalStorage'
 
 import BaroviaMap from './assets/images/barovia-map.webp'
-import ZarovichCrest from './assets/images/zarovich_crest.webp'
+import ZarovichCrest from './assets/images/zarovich_crest_960x720.webp'
 
 import './App.css'
 
@@ -56,7 +56,7 @@ function App() {
 
   return (
     <>
-    <Splash>
+    <Splash timer={2000} >
       <div className='splash'>
         <img src={ZarovichCrest} style={{ width: '50%' }} />
         <h1 className='title'>Barovian Travel Planner</h1>
