@@ -1,0 +1,58 @@
+.controls {
+	--size: 42px;
+	--iconSize: 30px;
+	--color: black;
+	--bgColor: white;
+	--inactiveFG: black;
+	--inactiveBG: white;
+	--activeFG: black;
+	--activeBG: gold;
+
+	position: fixed;
+	top: 0;
+	width: 50%;
+	background-color: var(--windowBG);
+	box-sizing: border-box;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-items: flex-start;
+	align-items: center;
+	gap: 10px;
+	padding: 0px 10px;
+	z-index: 2;
+	border-radius: 0 0 25px;
+	border-right: 5px double black;
+	border-bottom: 5px double black;
+
+	.inactive {
+		--color: var(--inactiveFG);
+		--bgColor: var(--inactiveBG);
+	}
+
+	.active {
+		--color: var(--activeFG);
+		--bgColor: var(--activeBG);
+	}
+
+	button {
+		position: relative;
+		box-sizing: border-box;
+		width: var(--size);
+		aspect-ratio: 1 / 1;
+		border-radius: 50%;
+		border: 3px solid var(--color);
+		cursor: pointer;
+		background-color: var(--bgColor);
+
+		svg {
+			position: absolute;
+			width: var(--iconSize);
+			aspect-ratio: 1 / 1;
+			fill: var(--color);
+			top: 50%;
+			left: 50%;
+			translate: -50% -50%;
+			pointer-events: none;
+		}
+	}
+}

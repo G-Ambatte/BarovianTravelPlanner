@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { HexGrid, Layout, Hexagon, Path, Text, Hex, GridGenerator } from 'react-hexgrid'
 import Hexagons from './hexagons.jsx';
 import { initHex } from './hexs'
@@ -11,6 +11,7 @@ import ZarovichCrest from './assets/images/zarovich_crest_960x720.webp'
 import './App.css'
 
 import Splash from './splash.jsx';
+import Controls from './controls.jsx';
 
 
 function App() {
@@ -22,7 +23,8 @@ function App() {
   const [ gridValue, setGridValue ] = useLocalStorage('gridScale', 0.25);
   const [ speed, setSpeed ] = useLocalStorage('travelSpeed', 3);
 
-  const [ showHexagons, setShowHexagons ] = useState(false);
+  const [zoom, setZoom ] = useState(1.0);
+
   const [ hexagons, setHexagons ] = useState([]);
   const [ paths, setPaths ] = useState([]);
 
@@ -33,9 +35,7 @@ function App() {
   const [ activePaths, setActivePaths ] = useState([]);
   const [ activePathLength, setActivePathLength ] = useState(0);
 
-  const toggleOverlay = ()=>{
-    setShowOverlay(!showOverlay);
-  };
+  // useEffect(()=>{console.log(showOverlay);}, [showOverlay]);
 
   const addToCustomPath = (hex)=>{
     setCurrentHex(hex);
@@ -66,11 +66,11 @@ function App() {
         </p>
       </div>
     </Splash>
-    <div style={{ position: 'relative'}}>
+    <div className='map' style={{ transform: `scale(${zoom})` }}>
       <HexGrid width={1280} height={822} viewBox="0 0 1280 822" >
         <Layout size={{ x: 10.15, y: 10.15 }} flat={true} spacing={1} origin={{ x: 43, y: 52 }}>
           <Hexagons
-            display={showHexagons}
+            display={showOverlay}
             hexagons={hexagons}
             showOverlay={showOverlay}
             locations={false}
@@ -158,27 +158,15 @@ function App() {
           />
         </Layout>
       </HexGrid>
-      <img src={BaroviaMap} style={{width: '100%', position: 'absolute', left: 0, top: 0, zIndex: 0}}/>
+      <img src={BaroviaMap} />
     </div>
-    <div className='controls'>
-      <p>
-        <label>
-          <input type='checkbox' onClick={()=>toggleOverlay()} />
-          Show Overlay?
-        </label>
-      </p>
-      <p>
-        <label>
-          <input type='range' value={gridValue} min={0.25} max={10} step={0.25} onChange={(e)=>{setGridValue(e.target.value)}} />
-          Scale: {gridValue} miles per grid
-        </label>
-      </p>
-      <p>
-        <label>
-          <input type='range' value={speed} min={1} max={25} step={1} onChange={(e)=>{setSpeed(e.target.value)}} />
-          Speed: {speed} miles per hour
-        </label>
-      </p>
+    <Controls
+      showOverlay={showOverlay} setShowOverlay={setShowOverlay}
+      gridValue={gridValue} setGridValue={setGridValue}
+      speed={speed} setSpeed={setSpeed}
+      zoom={zoom} setZoom={setZoom}
+    />
+    <div className='controls-old'>
       <p>
         <button onClick={()=>{setCustomPaths([])}}>Clear Custom Paths</button>
       </p>
