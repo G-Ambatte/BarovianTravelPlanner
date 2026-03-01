@@ -56,10 +56,14 @@ function App() {
 
   return (
     <>
-    <Splash timer={2000} >
+    <Splash timer={2500} >
       <div className='splash'>
         <img src={ZarovichCrest} style={{ width: '50%' }} />
         <h1 className='title'>Barovian Travel Planner</h1>
+        <p>
+          Simplifying travel calculations for<br />
+          Strahd von Zarovich's Domain of Dread.
+        </p>
       </div>
     </Splash>
     <div style={{ position: 'relative'}}>
