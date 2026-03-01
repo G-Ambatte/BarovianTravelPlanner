@@ -7,7 +7,7 @@
 	right: 0;
 	margin: 0 auto;
 	box-sizing: border-box;
-	background-color: #78a;
+	background-color: var(--windowBG);
 	border: 15px double black;
 	z-index: 10;
 
