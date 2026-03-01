@@ -1,0 +1,17 @@
+.splash {
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	top: 0;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	box-sizing: border-box;
+	background-color: #78a;
+	border: 15px double black;
+	z-index: 10;
+
+	.title {
+		color: #336;
+	}
+}

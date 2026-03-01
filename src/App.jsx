@@ -6,7 +6,11 @@ import { getPathLength, initPaths } from './paths'
 import { useLocalStorage } from './useLocalStorage'
 
 import BaroviaMap from './assets/images/barovia-map.webp'
+import ZarovichCrest from './assets/images/zarovich_crest.webp'
+
 import './App.css'
+
+import Splash from './splash.jsx';
 
 
 function App() {
@@ -52,6 +56,12 @@ function App() {
 
   return (
     <>
+    <Splash>
+      <div className='splash'>
+        <img src={ZarovichCrest} style={{ width: '50%' }} />
+        <h1 className='title'>Barovian Travel Planner</h1>
+      </div>
+    </Splash>
     <div style={{ position: 'relative'}}>
       <HexGrid width={1280} height={822} viewBox="0 0 1280 822" >
         <Layout size={{ x: 10.15, y: 10.15 }} flat={true} spacing={1} origin={{ x: 43, y: 52 }}>
