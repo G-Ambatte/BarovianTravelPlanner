@@ -20,7 +20,9 @@ function Controls({
 	zoom,
 	setZoom = ()=>{},
 	data = '',
-	setData = ()=>{}
+	setData = ()=>{},
+	selectMode = 'none',
+	setSelectMode = ()=>{}
 }){
 
 	const [ showOpts, setShowOpts ] = useState(false);
@@ -63,6 +65,26 @@ function Controls({
 				onClick={()=>toggleOverlay()}
 			>
 				<HexIcon />
+			</Button>
+		</p>
+		<p className={`selectionAdd ${selectMode == 'add' ? 'active' : 'inactive'}`}>
+			<Button
+				title='add to selection'
+				data='Add to Selection'
+				setData={setData}
+				onClick={()=>{ setSelectMode( selectMode != 'add' ? 'add' : 'none' ) }}
+			>
+				<PlusIcon />
+			</Button>
+		</p>
+		<p className={`selectionAdd ${selectMode == 'remove' ? 'active' : 'inactive'}`}>
+			<Button
+				title='remove from selection'
+				data='Remove from Selection'
+				setData={setData}
+				onClick={()=>{ setSelectMode( selectMode != 'remove' ? 'remove' : 'none' ) }}
+			>
+				<MinusIcon />
 			</Button>
 		</p>
 		<p className='zoom-in'>

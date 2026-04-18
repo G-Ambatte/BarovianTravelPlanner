@@ -36,8 +36,30 @@ function App() {
   const [ activePathLength, setActivePathLength ] = useState(0);
 
   const [ data, setData ] = useState('');
+  const [ selectMode, setSelectMode ] = useState('none');
 
   // useEffect(()=>{console.log(showOverlay);}, [showOverlay]);
+
+  useEffect(()=>{
+    function addState(e){
+      if(e.ctrlKey && selectMode != 'add'){
+        setSelectMode('add');
+      }
+      if(e.shiftKey && selectMode != 'remove'){
+        setSelectMode('remove');
+      }
+    };
+    function removeState(){
+      setSelectMode('none');
+    }
+    window.addEventListener('keydown', (e)=>{addState(e)});
+    window.addEventListener('keyup', (e)=>{removeState(e)});
+
+    return ()=>{
+      window.removeEventListener('keydown', addState);
+      window.removeEventListener('keyup', (e)=>{removeState(e)});
+    }
+  }, []);
 
   const addToCustomPath = (hex)=>{
     setCurrentHex(hex);
@@ -90,8 +112,8 @@ function App() {
                   start={new Hex(segment.start.q, segment.start.r, segment.start.s)}
                   end={new Hex(segment.end.q, segment.end.r, segment.end.s)}
                   onMouseOver={(e)=>{
-                    if(e.ctrlKey && !activePaths.includes(path.name)){ setActivePaths([ ...activePaths, path.name ]); };
-                    if(e.shiftKey && activePaths.includes(path.name)){ setActivePaths( activePaths.filter((name)=>{return name != path.name})); };
+                    if(selectMode == 'add' && !activePaths.includes(path.name)){ setActivePaths([ ...activePaths, path.name ]); };
+                    if(selectMode == 'remove' && activePaths.includes(path.name)){ setActivePaths( activePaths.filter((name)=>{return name != path.name})); };
                     setPathName(path.name);
                     setPathLength(path.length);
                     updateActivePathLength();
@@ -170,6 +192,7 @@ function App() {
       speed={speed} setSpeed={setSpeed}
       zoom={zoom} setZoom={setZoom}
       data={data} setData={setData}
+      selectMode={selectMode} setSelectMode={setSelectMode}
     />
     <div className='controls-old'>
       <p>
