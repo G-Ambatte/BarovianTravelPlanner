@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
+import Label from './label.jsx';
+import Button from './button.jsx';
 
 import './controls.css'
+import GearIcon from './assets/svgs/gear.jsx';
 import HexIcon from './assets/svgs/hex.jsx'
 import PlusIcon from './assets/svgs/plus.jsx';
 import MinusIcon from './assets/svgs/minus.jsx';
+import ZoomInIcon from './assets/svgs/zoom-in.jsx';
+import ZoomOutIcon from './assets/svgs/zoom-out.jsx';
 
 function Controls({
 	showOverlay = false,
@@ -13,8 +18,12 @@ function Controls({
 	speed,
 	setSpeed = ()=>{},
 	zoom,
-	setZoom = ()=>{}
+	setZoom = ()=>{},
+	data = '',
+	setData = ()=>{}
 }){
+
+	const [ showOpts, setShowOpts ] = useState(false);
 
 	const toggleOverlay = ()=>{
 		setShowOverlay(!showOverlay);
@@ -22,46 +31,63 @@ function Controls({
 
   return (
 	<div className='controls'>
-		<p>
-			<label aria-label='scale' title='scale'>
-				<input type='range' value={gridValue} min={0.25} max={10} step={0.25} onChange={(e)=>{setGridValue(e.target.value)}} />
-				<br />
-				{gridValue} miles/hex
-			</label>
-		</p>
-		<p>
-			<label aria-label='speed' title='speed'>
-				<input type='range' value={speed} min={1} max={25} step={1} onChange={(e)=>{setSpeed(e.target.value)}} />
-				<br />
-				{speed} mph
-			</label>
+		<p className={`gear ${showOpts ? 'active' : 'inactive'}`}>
+			<Button
+				data='Options'
+				setData={setData}
+				onClick={()=>{ setShowOpts(!showOpts) }}
+			>
+				<GearIcon />
+			</Button>
+			{showOpts && <>
+				<p className='scaleControls'>
+					<Label title='scale'>
+						<input type='range' value={gridValue} min={0.25} max={10} step={0.25} onChange={(e)=>{setGridValue(e.target.value)}} />
+						<br />
+						{gridValue} miles/hex
+					</Label>
+					<br />
+					<Label title='speed'>
+						<input type='range' value={speed} min={1} max={25} step={1} onChange={(e)=>{setSpeed(e.target.value)}} />
+						<br />
+						{speed} mph
+					</Label>
+				</p>
+			</>}
 		</p>
 		<p className={`hex ${showOverlay ? 'active' : 'inactive'}`}>
-			<button
+			<Button
 				title='toggle hex'
-				aria-label='toggle hex'
+				data='Hexes'
+				setData={setData}
 				onClick={()=>toggleOverlay()}
 			>
 				<HexIcon />
-			</button>
+			</Button>
 		</p>
 		<p className='zoom-in'>
-			<button
+			<Button
 				title='zoom in'
-				aria-label='zoom in'
+				data='Zoom In'
+				setData={setData}
 				onClick={()=>setZoom(Math.min(zoom+0.1,2))}
 			>
-				<PlusIcon />
-			</button>
+				<ZoomInIcon />
+			</Button>
 		</p>
 		<p className='zoom-out'>
-			<button
+			<Button
 				title='zoom out'
-				aria-label='zoom out'
+				data='Zoom Out'
+				setData={setData}
 				onClick={()=>setZoom(Math.max(zoom-0.1, 0.5))}
 			>
-				<MinusIcon />
-			</button>
+				<ZoomOutIcon />
+			</Button>
+		</p>
+		<div className='spacer'></div>
+		<p className='data'>
+			{data}
 		</p>
 	</div>
   )

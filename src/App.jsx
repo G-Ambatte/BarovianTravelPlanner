@@ -35,6 +35,8 @@ function App() {
   const [ activePaths, setActivePaths ] = useState([]);
   const [ activePathLength, setActivePathLength ] = useState(0);
 
+  const [ data, setData ] = useState('');
+
   // useEffect(()=>{console.log(showOverlay);}, [showOverlay]);
 
   const addToCustomPath = (hex)=>{
@@ -151,8 +153,10 @@ function App() {
             hexagons={hexagons}
             showOverlay={showOverlay}
             locations={true}
-            locationName={locationName}
-            setLocationName={setLocationName}
+            // locationName={locationName}
+            // setLocationName={setLocationName}
+            locationName={data}
+            setLocationName={setData}
             currentHex={currentHex}
             addToCustomPath={addToCustomPath}
           />
@@ -165,6 +169,7 @@ function App() {
       gridValue={gridValue} setGridValue={setGridValue}
       speed={speed} setSpeed={setSpeed}
       zoom={zoom} setZoom={setZoom}
+      data={data} setData={setData}
     />
     <div className='controls-old'>
       <p>

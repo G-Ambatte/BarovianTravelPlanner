@@ -55,4 +55,23 @@
 			pointer-events: none;
 		}
 	}
+
+	.scaleControls {
+		position: absolute;
+		display: block;
+		background-color: var(--windowBG);
+		padding: 0px 10px 5px;
+		border-radius: 0 0 25px;
+		border-right: 5px double black;
+		border-bottom: 5px double black;
+		left: 0;
+	}
+
+	.spacer {
+		flex-grow: 1;
+	}
+
+	.data {
+		font-size: 1.35em;
+	}
 }
