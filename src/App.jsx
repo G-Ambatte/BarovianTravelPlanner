@@ -43,13 +43,16 @@ function App() {
   useEffect(()=>{
     function addState(e){
       if(e.ctrlKey && selectMode != 'add'){
+        setData('Add to Selection');
         setSelectMode('add');
       }
       if(e.shiftKey && selectMode != 'remove'){
+        setData('Remove from Selection');
         setSelectMode('remove');
       }
     };
     function removeState(){
+      setData('');
       setSelectMode('none');
     }
     window.addEventListener('keydown', (e)=>{addState(e)});
