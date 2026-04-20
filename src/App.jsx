@@ -189,14 +189,20 @@ function App() {
       </HexGrid>
       <img src={BaroviaMap} />
     </div>
-    <Controls
-      showOverlay={showOverlay} setShowOverlay={setShowOverlay}
-      gridValue={gridValue} setGridValue={setGridValue}
-      speed={speed} setSpeed={setSpeed}
-      zoom={zoom} setZoom={setZoom}
-      data={data} setData={setData}
-      selectMode={selectMode} setSelectMode={setSelectMode}
-    />
+
+    <div className='dash'>
+      <Controls
+        showOverlay={showOverlay} setShowOverlay={setShowOverlay}
+        gridValue={gridValue} setGridValue={setGridValue}
+        speed={speed} setSpeed={setSpeed}
+        zoom={zoom} setZoom={setZoom}
+        data={data} setData={setData}
+        selectMode={selectMode} setSelectMode={setSelectMode}
+      />
+      <div className='data'>
+        <span className='small'>Miles:</span><span className='distance large'>{activePathLength * gridValue}</span>
+      </div>
+    </div>
     <div className='controls-old'>
       <p>
         <button onClick={()=>{setCustomPaths([])}}>Clear Custom Paths</button>

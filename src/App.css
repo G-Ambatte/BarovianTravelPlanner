@@ -57,3 +57,30 @@ body {
 		z-index: 0;
 	}
 }
+
+.dash {
+	top: 0;
+	left: 0;
+
+	.data {
+		color: white;
+		position: fixed;
+		top: 0;
+		right: 0;
+		display: flex;
+		align-items: center;
+		padding: 0px 20px 25px 50px;
+		background: #00000070;
+		border-left: 2px solid black;
+		border-radius: 0 0 0 15px;
+		border-bottom: 2px solid black;
+
+		.small {
+			font-size: 20px;
+			padding-right: 20px;
+		}
+		.large {
+			font-size: 96px;
+		}
+	}
+}

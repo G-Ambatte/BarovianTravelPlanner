@@ -70,7 +70,7 @@ function Controls({
 		<p className={`selectionAdd ${selectMode == 'add' ? 'active' : 'inactive'}`}>
 			<Button
 				title='add to selection'
-				data='Add to Selection'
+				data='(CTRL) Add to Selection'
 				setData={setData}
 				onClick={()=>{ setSelectMode( selectMode != 'add' ? 'add' : 'none' ) }}
 			>
@@ -80,7 +80,7 @@ function Controls({
 		<p className={`selectionAdd ${selectMode == 'remove' ? 'active' : 'inactive'}`}>
 			<Button
 				title='remove from selection'
-				data='Remove from Selection'
+				data='(SHIFT) Remove from Selection'
 				setData={setData}
 				onClick={()=>{ setSelectMode( selectMode != 'remove' ? 'remove' : 'none' ) }}
 			>
@@ -108,7 +108,7 @@ function Controls({
 			</Button>
 		</p>
 		<div className='spacer'></div>
-		<p className='data'>
+		<p className='output'>
 			{data}
 		</p>
 	</div>
