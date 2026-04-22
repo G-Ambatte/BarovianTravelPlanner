@@ -5,6 +5,7 @@ import Button from './button.jsx';
 import './controls.css'
 import GearIcon from './assets/svgs/gear.jsx';
 import HexIcon from './assets/svgs/hex.jsx'
+import NodesIcon from './assets/svgs/nodes.jsx';
 import PlusIcon from './assets/svgs/plus.jsx';
 import MinusIcon from './assets/svgs/minus.jsx';
 import ZoomInIcon from './assets/svgs/zoom-in.jsx';
@@ -59,12 +60,12 @@ function Controls({
 		</p>
 		<p className={`hex ${showOverlay ? 'active' : 'inactive'}`}>
 			<Button
-				title='toggle hex'
-				data='Hexes'
+				title='custom paths'
+				data='Custom Paths'
 				setData={setData}
 				onClick={()=>toggleOverlay()}
 			>
-				<HexIcon />
+				<NodesIcon />
 			</Button>
 		</p>
 		<p className={`selectionAdd ${selectMode == 'add' ? 'active' : 'inactive'}`}>
