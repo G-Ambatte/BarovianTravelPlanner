@@ -23,7 +23,7 @@ const Hexagons = memo(({
         s={hex.s}
         stroke={showOverlay ? 'blue' : 'transparent' }
         onMouseOver={ ()=>{if(hex.name) setLocationName(hex.name)} }
-        onClick={()=>{addToCustomPath(hex)}}
+        onClick={()=>{showOverlay && addToCustomPath(hex)}}
       />})
 })
 
