@@ -8,6 +8,7 @@ import HexIcon from './assets/svgs/hex.jsx'
 import NodesIcon from './assets/svgs/nodes.jsx';
 import PlusIcon from './assets/svgs/plus.jsx';
 import MinusIcon from './assets/svgs/minus.jsx';
+import EraserIcon from './assets/svgs/eraser.jsx';
 import ZoomInIcon from './assets/svgs/zoom-in.jsx';
 import ZoomOutIcon from './assets/svgs/zoom-out.jsx';
 
@@ -23,7 +24,8 @@ function Controls({
 	data = '',
 	setData = ()=>{},
 	selectMode = 'none',
-	setSelectMode = ()=>{}
+	setSelectMode = ()=>{},
+	setActivePaths = ()=>{}
 }){
 
 	const [ showOpts, setShowOpts ] = useState(false);
@@ -87,6 +89,16 @@ function Controls({
 				onClick={()=>{ setSelectMode( selectMode != 'remove' ? 'remove' : 'none' ) }}
 			>
 				<MinusIcon />
+			</Button>
+		</p>
+		<p className='selectionClear'>
+			<Button
+				title='clear selection'
+				data='Clear Selection'
+				setData={setData}
+				onClick={()=>{ setActivePaths([]) }}
+			>
+				<EraserIcon />
 			</Button>
 		</p>
 		<p className='zoom-in'>

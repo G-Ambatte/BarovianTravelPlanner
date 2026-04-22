@@ -200,6 +200,7 @@ function App() {
         zoom={zoom} setZoom={setZoom}
         data={data} setData={setData}
         selectMode={selectMode} setSelectMode={setSelectMode}
+        setActivePaths={setActivePaths}
       />
       <div className='data'>
         <p className='distance'>
