@@ -64,6 +64,10 @@ function App() {
     }
   }, []);
 
+  useEffect(()=>{
+    updateActivePathLength();
+  },[ JSON.stringify(activePaths) ]);
+
   const addToCustomPath = (hex)=>{
     setCurrentHex(hex);
     if(!customPath?.start) {
@@ -114,12 +118,11 @@ function App() {
                   className='path selected'
                   start={new Hex(segment.start.q, segment.start.r, segment.start.s)}
                   end={new Hex(segment.end.q, segment.end.r, segment.end.s)}
-                  onMouseOver={(e)=>{
+                  onMouseOver={()=>{
                     if(selectMode == 'add' && !activePaths.includes(path.name)){ setActivePaths([ ...activePaths, path.name ]); };
                     if(selectMode == 'remove' && activePaths.includes(path.name)){ setActivePaths( activePaths.filter((name)=>{return name != path.name})); };
                     setPathName(path.name);
                     setPathLength(path.length);
-                    updateActivePathLength();
                   }}
                 />
                 </g>
@@ -134,12 +137,11 @@ function App() {
                   className='path active'
                   start={new Hex(segment.start.q, segment.start.r, segment.start.s)}
                   end={new Hex(segment.end.q, segment.end.r, segment.end.s)}
-                  onMouseOver={(e)=>{
-                    if(e.ctrlKey && !activePaths.includes(path.name)){ setActivePaths([ ...activePaths, path.name ]); };
-                    if(e.shiftKey && activePaths.includes(path.name)){ setActivePaths( activePaths.filter((name)=>{return name != path.name}) )};
+                  onMouseOver={()=>{
+                    if(selectMode == 'add' && !activePaths.includes(path.name)){ setActivePaths([ ...activePaths, path.name ]); };
+                    if(selectMode == 'remove' && activePaths.includes(path.name)){ setActivePaths( activePaths.filter((name)=>{return name != path.name})); };
                     setPathName(path.name);
                     setPathLength(path.length);
-                    updateActivePathLength();
                   }}
                 />
                 </g>
@@ -200,7 +202,12 @@ function App() {
         selectMode={selectMode} setSelectMode={setSelectMode}
       />
       <div className='data'>
-        <span className='small'>Miles:</span><span className='distance large'>{activePathLength * gridValue}</span>
+        <p className='distance'>
+          <span className='small'>Miles:</span><span className='large'>{(activePathLength * gridValue).toFixed(2)}</span>
+        </p>
+        <p className='time'>
+          <span className='small'>Hours:</span><span className='large'>{(activePathLength * gridValue / speed).toFixed(2)}</span>
+        </p>
       </div>
     </div>
     <div className='controls-old'>
