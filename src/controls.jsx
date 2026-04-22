@@ -36,6 +36,7 @@ function Controls({
 	<div className='controls'>
 		<p className={`gear ${showOpts ? 'active' : 'inactive'}`}>
 			<Button
+				title='options'
 				data='Options'
 				setData={setData}
 				onClick={()=>{ setShowOpts(!showOpts) }}
