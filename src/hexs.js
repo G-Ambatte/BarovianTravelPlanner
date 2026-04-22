@@ -28,7 +28,7 @@ const locations = [
 	// Argynvostholt Turnoff
 	{ q: 20, r: 6, s:-26, name: 'Argynvostholt Turnoff' },
 	// Argynvostholt
-	{ q: 25, r: 7, s: -28, name: 'Argynvostholt' },
+	{ q: 25, r: 7, s: -32, name: 'Argynvostholt' },
 	// Raven River Crossroads
 	{ q: 16, r: 5, s:-21, name: 'Raven River Crossroads'},
 	// Berez
