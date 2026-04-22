@@ -17,7 +17,7 @@ function initHex() {
 		// Tser Falls Bridge
 		{ q: 48, r: -1, s: -47, name: 'Tser Falls Bridge' },
 		// Crossroads
-		{ q: 47, r: -5, s: -42, name: 'Crossroads' },
+		{ q: 47, r: -5, s: -42, name: 'West Gate' },
 		// Castle Ravenloft Entrance
 		{ q: 56, r: -7, s: -49, name: 'Castle Ravenloft Entrance' },
 		// Castle Ravenloft
