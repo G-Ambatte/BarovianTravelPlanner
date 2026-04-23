@@ -118,7 +118,7 @@ function App() {
                   className='path selected'
                   start={new Hex(segment.start.q, segment.start.r, segment.start.s)}
                   end={new Hex(segment.end.q, segment.end.r, segment.end.s)}
-                  onMouseOver={()=>{
+                  onPointerEnter={()=>{
                     if(selectMode == 'add' && !activePaths.includes(path.name)){ setActivePaths([ ...activePaths, path.name ]); };
                     if(selectMode == 'remove' && activePaths.includes(path.name)){ setActivePaths( activePaths.filter((name)=>{return name != path.name})); };
                     setPathName(path.name);
@@ -137,7 +137,7 @@ function App() {
                   className='path active'
                   start={new Hex(segment.start.q, segment.start.r, segment.start.s)}
                   end={new Hex(segment.end.q, segment.end.r, segment.end.s)}
-                  onMouseOver={()=>{
+                  onPointerEnter={()=>{
                     if(selectMode == 'add' && !activePaths.includes(path.name)){ setActivePaths([ ...activePaths, path.name ]); };
                     if(selectMode == 'remove' && activePaths.includes(path.name)){ setActivePaths( activePaths.filter((name)=>{return name != path.name})); };
                     setPathName(path.name);
@@ -157,7 +157,7 @@ function App() {
                   start={new Hex(segment.start.q, segment.start.r, segment.start.s)}
                   end={new Hex(segment.end.q, segment.end.r, segment.end.s)}
                   stroke={path.color}
-                  onMouseOver={()=>{setPathName(path.name); setPathLength(path.length)}}
+                  onPointerEnter={()=>{setPathName(path.name); setPathLength(path.length)}}
                 />
                 </g>
               })
@@ -171,7 +171,7 @@ function App() {
                 start={new Hex(path.start.q, path.start.r, path.start.s)}
                 end={new Hex(path.end.q, path.end.r, path.end.s)}
                 stroke='red'
-                onMouseOver={()=>{setPathName('Custom Path'); setPathLength(path.length)}}
+                onPointerEnter={()=>{setPathName('Custom Path'); setPathLength(path.length)}}
               />
               </g>
             })
