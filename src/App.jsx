@@ -215,9 +215,6 @@ function App() {
       <p>
         <button onClick={()=>{setCustomPaths([])}}>Clear Custom Paths</button>
       </p>
-      <p>
-        <button onClick={()=>{setActivePaths([])}}>Clear Active Paths</button>
-      </p>
       <div className='info'>
         <h3>{locationName || 'Hover over a location'}</h3>
         <h4>{pathName || 'Hover over a path'}</h4>
