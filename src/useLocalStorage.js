@@ -4,12 +4,12 @@ function useStorage(storage, key, initialValue){
 	if(!storage) throw 'Storage error!';
 
 	let value = initialValue;
-	if(storage[key]) value = storage.getItem(key);
+	if(storage[key]) value = JSON.parse(storage.getItem(key));
 
 	const [ state , setState ] = useState(value);
 
 	useEffect(()=>{
-		storage.setItem(key, state);
+		storage.setItem(key, JSON.stringify(state));
 	}, [ state ]);
 
 	function clearState(){
