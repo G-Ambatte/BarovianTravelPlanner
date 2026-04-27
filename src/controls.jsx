@@ -11,6 +11,8 @@ import MinusIcon from './assets/svgs/minus.jsx';
 import EraserIcon from './assets/svgs/eraser.jsx';
 import ZoomInIcon from './assets/svgs/zoom-in.jsx';
 import ZoomOutIcon from './assets/svgs/zoom-out.jsx';
+import EyeIcon from './assets/svgs/eye.jsx';
+import EyeSlashIcon from './assets/svgs/eye-slash.jsx';
 
 function Controls({
 	showOverlay = false,
@@ -25,6 +27,8 @@ function Controls({
 	setData = ()=>{},
 	selectMode = 'none',
 	setSelectMode = ()=>{},
+	hidden = false,
+	setHidden = ()=>{},
 	setActivePaths = ()=>{}
 }){
 
@@ -119,6 +123,16 @@ function Controls({
 				onClick={()=>setZoom(Math.max(zoom-0.1, 0.5))}
 			>
 				<ZoomOutIcon />
+			</Button>
+		</p>
+		<p className={`hidden ${hidden ? 'active' : 'inactive'}`}>
+			<Button
+				title={`${hidden ? 'show' : 'hide'} paths`}
+				data={`${hidden ? 'Show' : 'Hide'} Paths`}
+				setData={setData}
+				onClick={()=>{ setHidden( !hidden ); }}
+			>
+				{hidden ? <EyeSlashIcon /> : <EyeIcon />}
 			</Button>
 		</p>
 		<div className='spacer'></div>

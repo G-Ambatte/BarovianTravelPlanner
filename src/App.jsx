@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { HexGrid, Layout, Hexagon, Path, Text, Hex, GridGenerator } from 'react-hexgrid'
 import Hexagons from './hexagons.jsx';
 import { initHex } from './hexs'
@@ -38,17 +38,32 @@ function App() {
   const [ data, setData ] = useState('');
   const [ selectMode, setSelectMode ] = useState('none');
 
+  const [ hidden, setHidden ] = useLocalStorage('hiddenPathMode', false);
+  const [ knownPaths, setKnownPaths ] = useLocalStorage('knownPaths', []);
+  const [ knownLocations, setKnownLocations ] = useLocalStorage('knownLocations', []);
+
+
   // useEffect(()=>{console.log(showOverlay);}, [showOverlay]);
 
   useEffect(()=>{
     function addState(e){
-      if(e.ctrlKey && selectMode != 'add'){
+      if(e.ctrlKey){
         setData('Add to Selection');
         setSelectMode('add');
       }
-      if(e.shiftKey && selectMode != 'remove'){
+      if(e.shiftKey){
         setData('Remove from Selection');
         setSelectMode('remove');
+      }
+
+      const keyMap = {
+        a: ()=>{ setSelectMode('add'); setData('Add to Selection'); },
+        s: ()=>{ setSelectMode('remove'); setData('Remove from Selection'); },
+        d: ()=>{ setHidden( true ); setData('Unknown Paths Locked'); },
+        z: ()=>{ setActivePaths([]); setData('Selection Cleared!'); }
+      }
+      if(Object.keys(keyMap).includes(e.key)){
+        keyMap[e.key]();
       }
     };
     function removeState(){
@@ -67,6 +82,19 @@ function App() {
   useEffect(()=>{
     updateActivePathLength();
   },[ JSON.stringify(activePaths) ]);
+
+  useEffect(()=>{
+    if(hidden){
+      setKnownPaths(activePaths);
+      return;
+     }
+     setActivePaths(knownPaths);
+  }, [ hidden ] )
+
+  useEffect(()=>{
+    setKnownLocations( Array.from(new Set(knownPaths.join(' - ').split(' - '))) );
+  },[ knownPaths ]);
+
 
   const addToCustomPath = (hex)=>{
     setCurrentHex(hex);
@@ -110,7 +138,9 @@ function App() {
             currentHex={currentHex}
             addToCustomPath={addToCustomPath}
           />
-          { paths.filter((path)=>{return pathName == path.name;}).map((path, i)=>{
+          { paths
+            .filter((path)=>{return pathName == path.name && (!hidden || knownPaths.includes(path.name));})
+            .map((path, i)=>{
             return path.segments.map((segment, segmentIndex)=>{
               return <g key={`active-${i}-${segmentIndex}`}>
                 <Path
@@ -129,7 +159,9 @@ function App() {
               })
             })
           }
-          { paths.filter((path)=>{return activePaths.includes(path.name) && pathName != path.name;}).map((path, i)=>{
+          { paths
+              .filter((path)=>{return activePaths.includes(path.name) && pathName != path.name;})
+              .map((path, i)=>{
             return path.segments.map((segment, segmentIndex)=>{
               return <g key={`active-${i}-${segmentIndex}`}>
                 <Path
@@ -148,20 +180,23 @@ function App() {
               })
             })
           }
-          { paths.map((path, i)=>{
-            return path.segments.map((segment, segmentIndex)=>{
-              return <g key={`group-${i}-${segmentIndex}`}>
-                <Path
-                  key={`path-${i}-${segmentIndex}`}
-                  className='path'
-                  start={new Hex(segment.start.q, segment.start.r, segment.start.s)}
-                  end={new Hex(segment.end.q, segment.end.r, segment.end.s)}
-                  stroke={path.color}
-                  onPointerEnter={()=>{setPathName(path.name); setPathLength(path.length)}}
-                />
-                </g>
+          {
+            paths
+              .filter((path)=>{ return !hidden || knownLocations.some((name)=>{return path.name.indexOf(name) != -1}) })
+              .map((path, i)=>{
+              return path.segments.map((segment, segmentIndex)=>{
+                return <g key={`group-${i}-${segmentIndex}`}>
+                  <Path
+                    key={`path-${i}-${segmentIndex}`}
+                    className='path'
+                    start={new Hex(segment.start.q, segment.start.r, segment.start.s)}
+                    end={new Hex(segment.end.q, segment.end.r, segment.end.s)}
+                    stroke={path.color}
+                    onPointerEnter={()=>{setPathName(path.name); setPathLength(path.length)}}
+                  />
+                  </g>
+                })
               })
-            })
           }
           { customPaths.map((path, i)=>{
             return <g key={`customgroup-${i}`}>
@@ -178,14 +213,14 @@ function App() {
           }
           <Hexagons
             hexagons={hexagons}
-            showOverlay={showOverlay}
+            showOverlay={false}
             locations={true}
-            // locationName={locationName}
-            // setLocationName={setLocationName}
             locationName={data}
             setLocationName={setData}
             currentHex={currentHex}
             addToCustomPath={addToCustomPath}
+            hidden={hidden}
+            knownLocations={knownLocations}
           />
         </Layout>
       </HexGrid>
@@ -201,6 +236,7 @@ function App() {
         data={data} setData={setData}
         selectMode={selectMode} setSelectMode={setSelectMode}
         setActivePaths={setActivePaths}
+        hidden={hidden} setHidden={setHidden}
       />
       <div className='data'>
         <p className='distance'>

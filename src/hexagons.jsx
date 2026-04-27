@@ -9,11 +9,13 @@ const Hexagons = memo(({
   locationName = '',
   setLocationName = ()=>{},
   currentHex = {},
-  addToCustomPath = ()=>{}
+  addToCustomPath = ()=>{},
+  hidden = false,
+  knownLocations = []
 }) => {
   if(!display) return;
   return hexagons
-    .filter((hex)=>{return locations == !!hex.name; })
+    .filter((hex)=>{return locations == !!hex.name && (!hidden || knownLocations.includes(hex.name)); })
     .map((hex, i)=>{
       return <Hexagon
         key={`hex-${i}`}
