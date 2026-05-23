@@ -10,5 +10,8 @@ export default defineConfig({
       },
     }),
   ],
-  base: '/BarovianTravelPlanner/'
+  base: '/BarovianTravelPlanner/',
+  server: {
+    forwardConsole: true
+  }
 })
