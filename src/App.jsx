@@ -12,6 +12,7 @@ import './App.css'
 
 import Splash from './splash.jsx';
 import Controls from './controls.jsx';
+import KeyBinds from './keybinds.jsx';
 
 
 function App() {
@@ -42,42 +43,6 @@ function App() {
   const [ knownPaths, setKnownPaths ] = useLocalStorage('knownPaths', []);
   const [ knownLocations, setKnownLocations ] = useLocalStorage('knownLocations', []);
 
-
-  // useEffect(()=>{console.log(showOverlay);}, [showOverlay]);
-
-  useEffect(()=>{
-    function addState(e){
-      if(e.ctrlKey){
-        setData('Add to Selection');
-        setSelectMode('add');
-      }
-      if(e.shiftKey){
-        setData('Remove from Selection');
-        setSelectMode('remove');
-      }
-
-      const keyMap = {
-        a: ()=>{ setSelectMode('add'); setData('Add to Selection'); },
-        s: ()=>{ setSelectMode('remove'); setData('Remove from Selection'); },
-        d: ()=>{ setHidden( true ); setData('Unknown Paths Locked'); },
-        z: ()=>{ setActivePaths([]); setData('Selection Cleared!'); }
-      }
-      if(Object.keys(keyMap).includes(e.key)){
-        keyMap[e.key]();
-      }
-    };
-    function removeState(){
-      setData('');
-      setSelectMode('none');
-    }
-    window.addEventListener('keydown', (e)=>{addState(e)});
-    window.addEventListener('keyup', (e)=>{removeState(e)});
-
-    return ()=>{
-      window.removeEventListener('keydown', addState);
-      window.removeEventListener('keyup', (e)=>{removeState(e)});
-    }
-  }, []);
 
   useEffect(()=>{
     updateActivePathLength();
@@ -113,6 +78,37 @@ function App() {
   if(hexagons.length == 0){ setHexagons(initHex()); };
   if(paths.length == 0){ setPaths(initPaths()); };
 
+  const keyMaps = [
+    {
+      key: null,
+      run: ()=>{ setSelectMode('none'); setData(''); }
+    },
+    {
+      key: 'a',
+      run: ()=>{ setSelectMode('add'); setData('Add to Selection'); }
+    },
+    {
+      key: 'Control',
+      run: ()=>{ setSelectMode('add'); setData('Add to Selection'); }
+    },
+    {
+      key: 's',
+      run: ()=>{ setSelectMode('remove'); setData('Remove from Selection'); }
+    },
+    {
+      key: 'Shift',
+      run: ()=>{ setSelectMode('remove'); setData('Remove from Selection'); }
+    },
+    {
+      key: 'd',
+      run: ()=>{ setHidden( !hidden ); setData('Unknown Paths Locked'); }
+    },
+    {
+      key: 'z',
+      run: ()=>{ setActivePaths([]); setData('Selection Cleared!'); }
+    }
+  ];
+
   return (
     <>
     <Splash timer={2500} >
@@ -125,6 +121,9 @@ function App() {
         </p>
       </div>
     </Splash>
+
+    <KeyBinds keyMaps={keyMaps} />
+
     <div className='map' style={{ transform: `scale(${zoom})` }}>
       <HexGrid width={1280} height={822} viewBox="0 0 1280 822" >
         <Layout size={{ x: 10.15, y: 10.15 }} flat={true} spacing={1} origin={{ x: 43, y: 52 }}>
@@ -149,8 +148,6 @@ function App() {
                   start={new Hex(segment.start.q, segment.start.r, segment.start.s)}
                   end={new Hex(segment.end.q, segment.end.r, segment.end.s)}
                   onPointerEnter={()=>{
-                    if(selectMode == 'add' && !activePaths.includes(path.name)){ setActivePaths([ ...activePaths, path.name ]); };
-                    if(selectMode == 'remove' && activePaths.includes(path.name)){ setActivePaths( activePaths.filter((name)=>{return name != path.name})); };
                     setPathName(path.name);
                     setPathLength(path.length);
                   }}
@@ -160,7 +157,7 @@ function App() {
             })
           }
           { paths
-              .filter((path)=>{return activePaths.includes(path.name) && pathName != path.name;})
+              .filter((path)=>{return activePaths.includes(path.name) && pathName != path.name && (!hidden || knownLocations.some((name)=>{return path.name.indexOf(name) != -1}));})
               .map((path, i)=>{
             return path.segments.map((segment, segmentIndex)=>{
               return <g key={`active-${i}-${segmentIndex}`}>
@@ -170,8 +167,6 @@ function App() {
                   start={new Hex(segment.start.q, segment.start.r, segment.start.s)}
                   end={new Hex(segment.end.q, segment.end.r, segment.end.s)}
                   onPointerEnter={()=>{
-                    if(selectMode == 'add' && !activePaths.includes(path.name)){ setActivePaths([ ...activePaths, path.name ]); };
-                    if(selectMode == 'remove' && activePaths.includes(path.name)){ setActivePaths( activePaths.filter((name)=>{return name != path.name})); };
                     setPathName(path.name);
                     setPathLength(path.length);
                   }}
@@ -192,7 +187,12 @@ function App() {
                     start={new Hex(segment.start.q, segment.start.r, segment.start.s)}
                     end={new Hex(segment.end.q, segment.end.r, segment.end.s)}
                     stroke={path.color}
-                    onPointerEnter={()=>{setPathName(path.name); setPathLength(path.length)}}
+                    onPointerEnter={()=>{
+                      if(selectMode == 'add' && !activePaths.includes(path.name)){ setActivePaths([ ...activePaths, path.name ]); };
+                      if(selectMode == 'remove' && activePaths.includes(path.name)){ setActivePaths( activePaths.filter((name)=>{return name != path.name})); };
+                      setPathName(path.name);
+                      setPathLength(path.length)}
+                    }
                   />
                   </g>
                 })
