@@ -1176,7 +1176,7 @@
 				"end": {
 					"q": 17,
 					"r": 2,
-					"s": -28,
+					"s": -19,
 					"name": "Tower of Khazan",
 					"className": "location"
 				}
@@ -1191,7 +1191,7 @@
 				"start": {
 					"q": 17,
 					"r": 2,
-					"s": -28,
+					"s": -19,
 					"name": "Tower of Khazan",
 					"className": "location"
 				},
